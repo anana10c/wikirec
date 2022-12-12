@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WikiRec</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+  	<div class="m-5">
+    <h1>Welcome to WikiRec!</h1>
+
+    <p>WikiRec is a Wikipedia page recommendation system. Given a Wikipedia page, it will recommend additional pages for further reading based on network distance within Wikipedia, similarity of topic and content, and article importance/quality.</p>
+
+    <p>WikiRec does not store or collect information from the search queries it receives. If you provide feedback on the results, it will be locally stored to improve your results and cannot be accessed by any other party. You can clear your feedback history by clicking the button below.</p>
+
+    <button class="btn btn-primary" type="submit" value="clear" id="clear">Clear Feedback History</button><br>
+
+  	</div>
+    <div class="m-5">
+    <form action="" id="search" method="POST">
+    <div class="row align-items-end">
+	  <div class="col-sm-7">
+	  	<label for="wikilink" class="col-form-label">Paste Wikipedia link here to begin!</label>
+	    <input type="text" name="wikilink" class="form-control" id="wikilink" placeholder="https://en.wikipedia.org/wiki/Human%E2%80%93computer_interaction">
+	  </div>
+	  <div class="col-auto">
+	    <button class="btn btn-primary" type="submit" id="submit" value="search">Search</button>
+	  </div>
+	  <div class="col-auto">
+	  	<label for="numResults" class="col-form-label">Number of results</label>
+	  	<select class="form-select" name="numResults" id="numResults" aria-label="Max Number of Results">
+	  	  <option value="3">3</option>
+			  <option value="5" selected>5</option>
+			  <option value="10">10</option>
+			  <option value="20">20</option>
+			</select>
+	  </div>
+	  <div class="col-auto">
+	    <div class="form-check my-1">
+		  <input class="form-check-input" type="checkbox" name="checkPageLink" value="true" id="checkPageLink">
+		  <label class="form-check-label" for="checkPageLink">
+		    include links from page
+		  </label>
+		</div>
+	  </div>
+	</div>
+	</form>
+	</div>
+	{% if results %}
+	<div class="m-5">
+	<h2>Results</h2>
+
+	{% for result in results %}
+	<div class="card my-3">
+	  <div class="card-body">
+	  	<p><a href={{ result[1] }} target="_blank">{{ result[0] }}</a></p>
+	  	<p>{{ result[2] }}</p>
+	  	<p>Explanation: {{ result[3] }}</p>
+	  	<div class="btn-group" role="group" aria-label={{ "result" }}{{ loop.index0 }}{{ "feedback" }}>
+		  <input type="radio" class="btn-check" name={{ "result" }}{{ loop.index0 }} id={{ "result" }}{{ loop.index0 }}{{ "-like" }} autocomplete="off">
+		  <label class="btn btn-outline-primary" for={{ "result" }}{{ loop.index0 }}{{ "-like" }}><i class="fas fa-thumbs-up"></i></label>
+
+		  <input type="radio" class="btn-check" name={{ "result" }}{{ loop.index0 }} id={{ "result" }}{{ loop.index0 }}{{ "-dislike" }} autocomplete="off">
+		  <label class="btn btn-outline-primary" for={{ "result" }}{{ loop.index0 }}{{ "-dislike" }}><i class="fas fa-thumbs-down"></i></label>
+			</div>
+		</div>
+  </div>
+  {% endfor %}
+  {% endif %}
+	</div>
+  </body>
+
+</html>
