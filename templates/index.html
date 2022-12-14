@@ -17,20 +17,22 @@
 
     <p>WikiRec is a Wikipedia page recommendation system. Given a Wikipedia page, it will recommend additional pages for further reading based on network distance within Wikipedia, similarity of topic and content, and article importance/quality.</p>
 
-    <p>WikiRec does not store or collect information from the search queries it receives. If you provide feedback on the results, it will be locally stored to improve your results and cannot be accessed by any other party. You can clear your feedback history by clicking the button below.</p>
+    <p>WikiRec does not store or collect information from the search queries it receives. If you provide feedback on the results, it will be locally stored to improve your results and cannot be accessed by any other party. You can clear your feedback history by clicking the "Clear Feedback History" button below.</p>
 
-    <button class="btn btn-primary" type="submit" value="clear" id="clear">Clear Feedback History</button><br>
+    <p>You can change the number of recommendation results in the dropdown. The checkbox "include links from page" indicates whether to recommend direct hyperlinks on the queried page in the results.</p>
 
-  	</div>
-    <div class="m-5">
-    <form action="" id="search" method="POST">
+    <form action="" name="search" id="search" value="search" method="POST">
     <div class="row align-items-end">
 	  <div class="col-sm-7">
 	  	<label for="wikilink" class="col-form-label">Paste Wikipedia link here to begin!</label>
+	  	{% if link %}
+	    <input type="text" name="wikilink" class="form-control" id="wikilink" value={{ link }} placeholder="https://en.wikipedia.org/wiki/Human%E2%80%93computer_interaction">
+	    {% else %}
 	    <input type="text" name="wikilink" class="form-control" id="wikilink" placeholder="https://en.wikipedia.org/wiki/Human%E2%80%93computer_interaction">
+	    {% endif %}
 	  </div>
 	  <div class="col-auto">
-	    <button class="btn btn-primary" type="submit" id="submit" value="search">Search</button>
+	    <button class="btn btn-primary" type="submit" name="search" id="search" value="search">Search</button>
 	  </div>
 	  <div class="col-auto">
 	  	<label for="numResults" class="col-form-label">Number of results</label>
@@ -52,9 +54,25 @@
 	</div>
 	</form>
 	</div>
+
+	<div class="m-5">
+	<form action="" name="clear" id="clear" value="clear" method="POST">
+  <button class="btn btn-primary" type="submit" name="clear" value="clear" id="clear">Clear Feedback History</button>
+  </form>
+	</div>
+
+	{% if message %}
+	<div class="m-5">
+	<div class="alert alert-info" role="alert">
+		{{ message }}
+	</div>
+	</div>
+	{% endif %}
 	{% if results %}
 	<div class="m-5">
 	<h2>Results</h2>
+
+	<p>Your recommendations are displayed below. To leave feedback on the relevance of the result, click the like/dislike buttons, then the submit button at the bottom of the page! Note that this will only affect your personal results.</p>
 
 	{% for result in results %}
 	<div class="card my-3">
@@ -63,15 +81,20 @@
 	  	<p>{{ result[2] }}</p>
 	  	<p>Explanation: {{ result[3] }}</p>
 	  	<div class="btn-group" role="group" aria-label={{ "result" }}{{ loop.index0 }}{{ "feedback" }}>
-		  <input type="radio" class="btn-check" name={{ "result" }}{{ loop.index0 }} id={{ "result" }}{{ loop.index0 }}{{ "-like" }} autocomplete="off">
+		  <input type="radio" class="btn-check" name={{ "result" }}{{ loop.index0 }} id={{ "result" }}{{ loop.index0 }}{{ "-like" }} value="like" autocomplete="off">
 		  <label class="btn btn-outline-primary" for={{ "result" }}{{ loop.index0 }}{{ "-like" }}><i class="fas fa-thumbs-up"></i></label>
 
-		  <input type="radio" class="btn-check" name={{ "result" }}{{ loop.index0 }} id={{ "result" }}{{ loop.index0 }}{{ "-dislike" }} autocomplete="off">
+		  <input type="radio" class="btn-check" name={{ "result" }}{{ loop.index0 }} id={{ "result" }}{{ loop.index0 }}{{ "-dislike" }} value="dislike" autocomplete="off">
 		  <label class="btn btn-outline-primary" for={{ "result" }}{{ loop.index0 }}{{ "-dislike" }}><i class="fas fa-thumbs-down"></i></label>
 			</div>
 		</div>
   </div>
   {% endfor %}
+	</form>
+
+	<form action="" name="feedback" id="feedback" value="feedback" method="POST">
+	<button class="btn btn-primary" type="submit" name="feedback" value="feedback" id="feedback">Submit Feedback</button><br>
+
   {% endif %}
 	</div>
   </body>
