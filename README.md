@@ -2,12 +2,24 @@
 
 05-318 Human-AI Interaction Final Project (Track B)
 
-## References
+To use: First download (or train) the pretrained English embeddings from Wikipedia2Vec, pageranks from Wikidata PageRank, and mapping indices from wikimapper (see links below). Make sure to include the file paths in `MODEL_FILE`, `PAGERANK_FILE`, and `MAPPER_FILE` respectively in app.py.
+
+To run: `python app.py`
+
+## References/Libraries
+
+Python 3.6
+
+NumPy
+
+Flask
 
 Wikipedia API: https://github.com/goldsmith/Wikipedia
 
-Wikipedia2Vec:
-Ikuya Yamada, Akari Asai, Jin Sakuma, Hiroyuki Shindo, Hideaki Takeda, Yoshiyasu Takefuji, Yuji Matsumoto, Wikipedia2Vec: An Efficient Toolkit for Learning and Visualizing the Embeddings of Words and Entities from Wikipedia.
+Wikipedia2Vec:\
+Ikuya Yamada, Akari Asai, Jin Sakuma, Hiroyuki Shindo, Hideaki Takeda, Yoshiyasu Takefuji, Yuji Matsumoto, Wikipedia2Vec: An Efficient Toolkit for Learning and Visualizing the Embeddings of Words and Entities from Wikipedia.\
 https://github.com/wikipedia2vec/wikipedia2vec
+
+Wikidata PageRank: https://danker.s3.amazonaws.com/index.html
 
 wikimapper: https://github.com/jcklie/wikimapper
