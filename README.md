@@ -8,8 +8,7 @@ To use: First download (or train) the pretrained English embeddings from Wikiped
 
 To run: `python app.py`
 
-## References/Libraries
-
+## Requirements
 Python 3.6, Bootstrap 5, NumPy, Flask
 
 Wikipedia API: https://github.com/goldsmith/Wikipedia
